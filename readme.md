@@ -23,7 +23,7 @@ Requirements
 
 
 
-Author &amp; Architect: DBJDBJ
+Author &amp; Architect: DBJDBJ   
 Licensing: MIT &amp; GPL
 
 ---------------------------------------------------------------------  
