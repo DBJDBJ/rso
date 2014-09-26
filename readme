@@ -1,0 +1,30 @@
+Really Small Offline Java Script Interpreter
+--------------------------------------------
+
+Concept
+=======
+
+Make a quick and smallest possible but fully functional JavaScript interpreter.
+
+Requirements
+============
+
+- Do not require network 
+- Do require a browser
+- Be browser agnostic
+- Be OS agnostic
+- Contain everything in one single html file
+- Provide: jQuery, Underscore and Require
+-- do not (re)invent a "plugin"
+- Do not try to be "IDE"
+-- syntax coloring and a such not in the core
+- Provide Minimal UI but with maximal functionality
+
+
+
+
+Author &amp; Architect: DBJDBJ
+Licensing: MIT &amp; GPL
+---------------------------------------------------------------------  
+####&copy; by [![dbj();](http://dbj.org/media/blue/dbj2_blue_50x50.png)](http://www.dbj.org "dbj")  
+
