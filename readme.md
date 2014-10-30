@@ -20,7 +20,14 @@ Requirements
 -- syntax coloring and a such not in the core
 - Provide Minimal UI but with maximal functionality
 
+Implementation
+--------------
 
+- A single HTML file
+-- Inserted 3 most popular libraries, are:
+--- jQuery 1.11.1
+--- Underscore 1.7.0
+--- Require 2.1.15
 
 
 Author &amp; Architect: DBJDBJ   
