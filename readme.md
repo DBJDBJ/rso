@@ -34,5 +34,5 @@ Author &amp; Architect: DBJDBJ
 Licensing: MIT &amp; GPL
 
 ---------------------------------------------------------------------  
-####&copy; 2014 by [![dbj();](http://dbj.org/media/blue/dbj2_blue_50x50.png)](http://www.dbj.org "dbj")  
+####&copy; 2014 by [![dbj();](http://dbj.dbjdbj.org/wp-content/uploads/2014/06/dbj100x100.png)](http://www.dbj.org "dbj")  
 
