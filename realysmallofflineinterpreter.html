@@ -60,27 +60,22 @@ O),s=s.replace(Q,""),g.jsExtRegExp.test(s)&&(s=I),q.deps=q.deps?q.deps.concat(s)
         html, body {
             width:100%;height:100%;
             min-width:400px; min-height:300px;
-			margin:0px;padding:0px;
-        }
-        body {
+			margin:1px;padding:1px;
             overflow:hidden ;
         }
-        #editor {
-            min-width:400px; min-height:300px;
-			width:99%; /* height:90%;*/
-            position: absolute;
-            padding:10px;
-            top:0px;
-            right:0px;
-            bottom:0px;
-            left:0px;
-            font: large/1.5 monospace;
-			z-index:-9999;
+        body {
         }
-        [contenteditable="true"] { outline: 12px solid grey; }
+        #editor {
+			height:95%;
+			width:99%; /* height:90%;*/
+            padding:10px;
+            font: large/1.5 monospace;
+        }
+        #editor[contenteditable="true"] { border: 12px outset; }
 
-       [contenteditable="true:hover { outline: 12px solid black; }
+       #editor[contenteditable="true"]:hover { border: 12px solid black; }
 
+	   .toolbar { width:100%; height:5%; background-color: #C0C0C0; }
     </style>
 </head>
 <body oncontextmenu="return false;">
@@ -90,40 +85,59 @@ Really Small Interpreter
 eval = CTRL + ENTER  
 */
 </textarea>
+<div class="toolbar"></div>
     
     <script id="main_script">
     onload = function () {
 
         var $editor = $("#editor",     document.body),
 		    $status = $("#dbj_status", document.body) ;
-		/*	
+		/*	*/
 		var print = function ( m_ ) {
-		    setTimeout( function () {
-			     console.log("dbj >>\t" + m_);
+		    var tid = setTimeout( function () {
+				 void clearTimeout(tid);
+			     if ( m_ instanceof Error ) {
+				    console.error(m_);
+				 } else if (_.isObject(m_)) {
+				    console.log("dbj >>\t");
+					console.dir(m_);
+				 }
+				 else {
+					console.log("dbj >>\t" + m_);
+				 }
 			},1);
 		}	
-*/
+		var assert = function ( m_ ) {
+		    setTimeout( function () {
+			     if (!!m_) return;
+				 console.error(new Error("dbj assert failed>>\t" + m_));
+			},1);
+		}	
+        /* */
         var dbj_eval = function (expr) {
             try {
-                if (! expr || expr == "") return "";
-                return eval(expr);
+				return eval(expr);
             } catch (x) {
-                return x + "";
+                return x +"";
             }
         }
 		
 	$editor.focus();
 	
-    $editor.click(function () { $editor.focus(); });	
-
-    $editor.keyup(function (EV) {
-			// print( EV.which + "\t + \t" + EV.ctrlKey);
-			if (EV.ctrlKey)
-            if (EV.which == 13) {
-			$editor.focusEnd();
-			$editor.insertAtCursor("\t// => " + dbj_eval($editor.val()) + " \n" );
-	//$editor.val( $editor.val() + "\t// => " + dbj_eval($editor.val()) + " \n" );
-             EV.cancelBubble = true;
+    $editor.click(function (EV) { $editor.focus(); return true; });	
+/*
+for textarea or other input elements val() has to be used. otherwise text() method
+depends on $editor to be present in the scope
+*/
+   var content = function ( new_content_ ) {
+		return $editor.text(new_content_);
+   }
+   
+    $editor.keydown(function (EV) {
+			if (EV.ctrlKey && EV.which == 13) {
+			print( "EV.which: " + EV.which + "\t + \tEV.ctrlKey: " + EV.ctrlKey);
+            $editor.val( $editor.val() + "\t// => " +  dbj_eval($editor.val()) + " \n" );
+            EV.cancelBubble = true;
 			 return false; // same as EV.stopPropagation() ?
 			}
 	return true;
@@ -132,6 +146,7 @@ eval = CTRL + ENTER
     </script>
 	<script id="text_range_related">
 	$(document).ready(function() {
+	/***************************************************************************/
 jQuery.fn.extend({
 		setCursorPosition: function(position){
 		    if(this.length == 0) return this;
@@ -197,18 +212,20 @@ jQuery.fn.extend({
 			      this.selectionEnd = startPos + myValue.length;
 			      this.scrollTop = scrollTop;
 			    } else {
+				console.assert(!!this.value) ; // dbj added 2015APR16
 			      this.value += myValue;
 			      this.focus();
 			    }
 		  	})
 	    }
-    
+    /************************************************************************/
 	});
 /*
 Usage: insert 'world!' at the end of the text
-       $("#mytextarea").focusEnd();
-       $("#mytextarea").insertAtCursor(" world!");
 */
+       $("#editor").focusEnd();
+       $("#editor").insertAtCursor(" world!");
+/**/
 });
 </script>
 
